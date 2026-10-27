@@ -1,0 +1,5 @@
+{
+  "name": "Cdscii Land Monitoring",
+  "description": "A government-grade platform for automated monitoring of industrial land allotments using satellite change detection and drone survey validation.",
+  "requestFramePermissions": []
+}

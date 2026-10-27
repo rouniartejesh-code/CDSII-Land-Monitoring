@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cdscii Land Monitoring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .leaflet-container { width: 100%; height: 100%; }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes soft-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.98); }
+        }
+        .animate-soft-pulse {
+            animation: soft-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stagger-1 { animation: slide-up 0.4s ease-out forwards; opacity: 0; }
+        .stagger-2 { animation: slide-up 0.4s ease-out 0.1s forwards; opacity: 0; }
+        .stagger-3 { animation: slide-up 0.4s ease-out 0.2s forwards; opacity: 0; }
+        .stagger-4 { animation: slide-up 0.4s ease-out 0.3s forwards; opacity: 0; }
+        .stagger-5 { animation: slide-up 0.4s ease-out 0.4s forwards; opacity: 0; }
+
+        /* Local File Protocol Warning */
+        #protocol-warning {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #0f172a;
+            color: white;
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom Map Overlay Styles */
+        .manual-blueprint-layer {
+            filter: drop-shadow(0 0 4px #00ffff);
+        }
+    </style>
+    <script>
+        window.process = { env: { NODE_ENV: 'production' } };
+        window.addEventListener('load', () => {
+            if (window.location.protocol === 'file:') {
+                document.getElementById('protocol-warning').style.display = 'flex';
+            }
+        });
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-50 overflow-hidden">
+    <div id="root"></div>
+    <div id="protocol-warning">
+        <h1 class="text-3xl font-black mb-4 uppercase tracking-tighter">Security Restriction</h1>
+        <p class="max-w-md text-slate-400 text-sm leading-relaxed mb-8">
+            Browsers block ES6 Modules (like React) when loaded via the <code>file://</code> protocol for security reasons.
+            <br><br>
+            Please run this application using a local web server (e.g., VS Code Live Server, <code>npx serve</code>, or <code>python -m http.server</code>).
+        </p>
+        <div class="px-6 py-3 bg-blue-600 rounded-lg font-bold text-xs uppercase tracking-widest">
+            Server Required
+        </div>
+    </div>
+    <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
